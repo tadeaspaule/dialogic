@@ -18,3 +18,6 @@ func _ready():
 	add_to_group('dialogic_choice_button')
 	shortcut_in_tooltip = false
 	hide()
+
+func set_text_value(txt :String):
+	text = txt

@@ -95,9 +95,9 @@ func show_choice(button_index:int, text:String, enabled:bool, event_index:int) -
 		if (node.choice_index == button_index) or (idx == button_index and node.choice_index == -1):
 			node.show()
 			if dialogic.has_subsystem('VAR'):
-				node.text = dialogic.VAR.parse_variables(text)
+				node.set_text_value(dialogic.VAR.parse_variables(text))
 			else:
-				node.text = text
+				node.set_text_value(text)
 			
 			if idx == 1 and ProjectSettings.get_setting('dialogic/choices/autofocus_first', true):
 				node.grab_focus()
