@@ -89,12 +89,20 @@ func to_text() -> String:
 func from_text(string:String) -> void:
 	var regex = RegEx.new()
 	regex.compile('- (?<text>[^\\[]*)(\\[if (?<condition>[^\\]]+)])?\\s?(\\s*\\[(?<shortcode>.*)\\])?')
+	print("diag old %s " % event_node_as_text)
+	print("diag old2 %s " % string)
 	var result = regex.search(string.strip_edges())
 	if result == null:
 		return
-	text = result.get_string('text')
+	var i = string.find('[if')
+	text = string.substr(0, i)
+	text = text.lstrip("- \t")
+	print("diag newxtext %s bcz %s" % [text, i])
 	condition = result.get_string('condition')
+	print("diag cond %s" % condition)
+	print("diag current_text: %s\nold text: %s" % [text, result.get_string('text')])
 	if result.get_string('shortcode'):
+		print("diag get shortcode %s" % result.get_string('shortcode'))
 		var shortcode_params = parse_shortcode_parameters(result.get_string('shortcode'))
 		else_action = {
 			'default':ElseActions.Default, 
