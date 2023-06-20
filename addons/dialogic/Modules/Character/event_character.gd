@@ -106,7 +106,11 @@ func _execute() -> void:
 					animation_length = ProjectSettings.get_setting('dialogic/animations/leave_default_length', 0.5) 
 					animation_wait = ProjectSettings.get_setting('dialogic/animations/leave_default_wait', true)
 				
-				if animation_name:
+				if animation_name == "instant":
+					for chara in dialogic.Portraits.get_joined_characters():
+						dialogic.Portraits.remove_portrait(chara)
+
+				elif animation_name:
 					for chara in dialogic.Portraits.get_joined_characters():
 						var anim = dialogic.Portraits.animate_portrait(chara, animation_name, animation_length, animation_repeats)
 						
@@ -310,7 +314,7 @@ func from_text(string:String) -> void:
 	if result.get_string('shortcode'):
 		var shortcode_params = parse_shortcode_parameters(result.get_string('shortcode'))
 		animation_name = shortcode_params.get('animation', '')
-		if animation_name != "":
+		if animation_name != "" and animation_name != "instant":
 			if !animation_name.ends_with('.gd'):
 				animation_name = guess_animation_file(animation_name)
 			if !animation_name.ends_with('.gd'):
